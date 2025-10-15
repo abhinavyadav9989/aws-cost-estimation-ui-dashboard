@@ -139,6 +139,13 @@ const DEFAULT_SERVICES = [
   { key: "apigw", name: "Amazon API Gateway", baseline: 0.01, elasticity: 0.7, notes: TERMS.apigw },
 ];
 
+// Stable color mapping per service key (preserves color when filtering)
+const COLOR_BY_KEY = (() => {
+  const m = {};
+  DEFAULT_SERVICES.forEach((s, idx) => { m[s.key] = COLORS[idx % COLORS.length]; });
+  return m;
+})();
+
 function computeProjected(baseline, elasticity, factor, trafficBoost = 1){
   const fixed = baseline * (1 - elasticity);
   const variable = baseline * elasticity * factor * trafficBoost;
@@ -295,7 +302,7 @@ export default function AwsCostEstimator(){
     if (pieParent) { pieCanvas.width = pieParent.clientWidth; pieCanvas.height = 260; }
 
     const dataValues = rows.map(r=>r.projected||0);
-    const dataColors = rows.map((_,i)=> COLORS[i%COLORS.length]);
+    const dataColors = rows.map((r)=> COLOR_BY_KEY[r.key] || COLORS[0]);
     pieChartRef.current = new Chart(pieCanvas.getContext('2d'), {
       type: 'doughnut',
       data: { labels: rows.map(r=>r.name), datasets: [{ data: dataValues, backgroundColor: dataColors }] },
@@ -405,27 +412,22 @@ export default function AwsCostEstimator(){
         </div>
         <div className="flex" style={{ flexWrap: 'wrap', gap: '8px 12px' }}>
           <div className="flex">
-            <label>
-              Currency
-              <span className="tooltip">?
-                <span className="tip">{TERMS.currency}</span>
-              </span>
-            </label>
+            <label>Currency</label>
             <div className="flex">
               <button className={`btn group ${currency==='USD' ? 'active' : ''}`} onClick={() => setCurrency('USD')}>$ USD</button>
               <button className={`btn group ${currency==='INR' ? 'active' : ''}`} onClick={() => setCurrency('INR')}>₹ INR</button>
           </div>
-            {currency==='INR' && (
-              <div className="flex" style={{ marginLeft: 8 }}>
-                <label>
-                  USD→INR
-                  <span className="tooltip">?
-                    <span className="tip">{TERMS.fx}</span>
-                  </span>
-                </label>
-                <input type="number" step={0.01} value={fxRate} onChange={(e)=> setFxRate(Math.max(0, parseFloat(e.target.value) || 0))} style={{ width: 90 }} />
-              </div>
-            )}
+            <div className="flex" style={{ marginLeft: 8 }}>
+              <label>USD→INR</label>
+              <input
+                type="number"
+                step={0.01}
+                value={fxRate}
+                onChange={(e)=> setFxRate(Math.max(0, parseFloat(e.target.value) || 0))}
+                style={{ width: 72, visibility: currency==='INR' ? 'visible' : 'hidden' }}
+                disabled={currency!=='INR'}
+              />
+            </div>
           </div>
           <button className="btn" onClick={resetAll}>Reset</button>
           <button className="btn primary" onClick={exportCSV}>Export CSV</button>
@@ -529,7 +531,7 @@ export default function AwsCostEstimator(){
             <div className="muted" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginTop: 4 }}>
               <span>Projected cost by service</span>
               {isFiltered && <button className="btn" onClick={clearFilter}>Clear filter</button>}
-            </div>
+                </div>
                     </div>
                   </div>
                 </div>
