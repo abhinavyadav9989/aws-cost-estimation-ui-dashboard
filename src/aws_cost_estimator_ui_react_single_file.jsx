@@ -249,7 +249,7 @@ export default function AWSBudgetEstimator() {
   const toLocal = (usd) => applyFx(usd, currency, fxRateINR);
 
   return (
-    <div className="min-h-screen w-full bg-white text-neutral-900 p-6">
+    <div className="min-h-screen w-full bg-gradient-to-br from-neutral-50 to-neutral-100 text-neutral-900 p-6 md:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
         <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -283,7 +283,7 @@ export default function AWSBudgetEstimator() {
         </header>
 
         {/* Mode toggle */}
-        <Card className="rounded-2xl shadow-sm">
+        <Card className="rounded-2xl bg-white/70 backdrop-blur-md border border-neutral-200/60 shadow-md">
           <CardContent className="p-3 md:p-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ListChecks className="h-4 w-4" />
@@ -297,7 +297,7 @@ export default function AWSBudgetEstimator() {
 
         {/* Quick Start — simple inputs */}
         <div className="grid md:grid-cols-3 gap-4">
-          <Card className="rounded-2xl shadow-sm">
+          <Card className="rounded-2xl bg-white/70 backdrop-blur-md border border-neutral-200/60 shadow-md">
             <CardContent className="p-4 space-y-4">
               <div className="flex items-center gap-2"><TrendingUp className="h-4 w-4"/><h2 className="font-medium">Quick Start</h2></div>
 
@@ -339,7 +339,7 @@ export default function AWSBudgetEstimator() {
           </Card>
 
           {/* Results */}
-          <Card className="rounded-2xl shadow-sm">
+          <Card className="rounded-2xl bg-white/70 backdrop-blur-md border border-neutral-200/60 shadow-md">
             <CardContent className="p-4 space-y-3">
               <div className="flex items-center gap-2"><Settings2 className="h-4 w-4"/><h2 className="font-medium">Your Estimate</h2></div>
               <div className="grid grid-cols-2 gap-3">
@@ -372,7 +372,7 @@ export default function AWSBudgetEstimator() {
           </Card>
 
           {/* Pie breakdown */}
-          <Card className="rounded-2xl shadow-sm">
+          <Card className="rounded-2xl bg-white/70 backdrop-blur-md border border-neutral-200/60 shadow-md">
             <CardContent className="p-4 h-full">
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
@@ -399,7 +399,7 @@ export default function AWSBudgetEstimator() {
               <div className="grid gap-4 md:grid-cols-1">
                 {/* Services table (shown only in advanced mode) */}
                 {advanced && (
-                  <Card className="rounded-2xl shadow-sm">
+                  <Card className="rounded-2xl bg-white/70 backdrop-blur-md border border-neutral-200/60 shadow-md">
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between pb-2">
                         <div className="flex items-center gap-2">
@@ -458,7 +458,7 @@ export default function AWSBudgetEstimator() {
                 )}
 
                 {/* Forecast chart */}
-                <Card className="rounded-2xl shadow-sm">
+                <Card className="rounded-2xl bg-white/70 backdrop-blur-md border border-neutral-200/60 shadow-md">
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-center gap-2"><Settings2 className="h-4 w-4"/><h2 className="font-medium"><span className="mr-2">{months}-Month Forecast</span><TL label="" term="forecast" /></h2></div>
                     <div className="grid grid-cols-2 gap-3">
@@ -504,7 +504,7 @@ export default function AWSBudgetEstimator() {
           <AccordionItem value="guide">
             <AccordionTrigger className="text-base">Pricing Guide (Management) – What drives each line item?</AccordionTrigger>
             <AccordionContent>
-              <Card className="rounded-2xl shadow-sm">
+              <Card className="rounded-2xl bg-white/70 backdrop-blur-md border border-neutral-200/60 shadow-md">
                 <CardContent className="p-4 space-y-4">
                   <p className="text-sm text-neutral-600">Simple summary of how each AWS service is billed, plus direct links to the official AWS pricing pages. Prices vary by Region, usage tier, and options. Always confirm on the linked AWS pages or the AWS Pricing Calculator.</p>
                   <div className="grid md:grid-cols-2 gap-4">
